@@ -18,6 +18,10 @@ AllCops:
   - "**/Vagabondfile"
   Exclude:
     - 'db/**/*'
+    - 'config/**/*'
+    - 'bin/**/*'
+    - 'spec/dummy/**/*'
+    - '.git/**/*'
 
 Style/AccessModifierIndentation:
   Description: Check indentation of private/protected visibility modifiers.
