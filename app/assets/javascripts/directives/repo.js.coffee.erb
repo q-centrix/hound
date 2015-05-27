@@ -1,0 +1,44 @@
+App.directive 'repo', ['Subscription', 'StripeCheckout', (Subscription, StripeCheckout) ->
+  scope: true
+  templateUrl: '/templates/repo'
+  link: (scope, element, attributes) ->
+    activateRepo = ->
+      scope.processing = true
+
+      scope.repo.$activate()
+        .catch(-> alert('Your repo failed to activate.'))
+        .finally(-> scope.processing = false)
+
+    deactivateRepo = ->
+      scope.processing = true
+
+      scope.repo.$deactivate()
+        .catch(-> alert('Your repo failed to deactivate.'))
+        .finally(-> scope.processing = false)
+
+    createSubscription = (stripeToken) ->
+      return true
+
+    deleteSubscription = ->
+      scope.processing = true
+
+      subscription = new Subscription(repo_id: scope.repo.id)
+
+      subscription.$delete().then(->
+        scope.repo.active = false
+        scope.repo.stripe_subscription_id = null
+      ).catch(->
+        alert('Your repo could not be disabled')
+      ).finally(->
+        scope.processing = false
+      )
+
+    scope.toggle = ->
+      if scope.repo.active
+        if scope.repo.stripe_subscription_id
+          deleteSubscription()
+        else
+          deactivateRepo()
+      else
+        activateRepo()
+]
