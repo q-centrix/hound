@@ -1,10 +1,10 @@
-Hound (Q-Centrix version)
+Hound (Q-Centrix bootleg)
 =====
 
 **Hound is wonderful open source code built by Thoughtbot with a permissive MIT
 license of their copyright. At Q-Centrix, we deploy this version of hound to
 heroku using free dynos to check our code (a simple ``git push heroku master``
-should work)**
+after defining your environment variables should work)**
 
 **What follows is from Thoughtbot's documentation, this project may not be up to
 date with the real version**
