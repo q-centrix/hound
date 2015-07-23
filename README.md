@@ -14,6 +14,8 @@ Take care of pesky code reviews with a trusty [Hound](http://houndci.com).
 Hound reviews GitHub pull requests for style guide violations. [View the style
 guide &rarr;](https://github.com/thoughtbot/guides/tree/master/style)
 
+This will deploy to heroku on every commit to master.
+
 ## Configure the Hound Service
 
 We run Hound as a hosted service at [houndci.com].
