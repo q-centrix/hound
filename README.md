@@ -16,6 +16,8 @@ guide &rarr;](https://github.com/thoughtbot/guides/tree/master/style)
 
 This will deploy to heroku on every commit to master.
 
+Visit https://q-centrix-hound.herokuapp.com/repos to add new repos to the scan list.
+
 ## Configure the Hound Service
 
 We run Hound as a hosted service at [houndci.com].
