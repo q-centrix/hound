@@ -3,6 +3,8 @@ App.directive 'repoList', ['Repo', 'Sync', 'User', '$timeout', (Repo, Sync, User
   templateUrl: '/templates/repo_list'
 
   link: (scope, element, attributes) ->
+    scope.includePrivateReposButtonText = '<%= I18n.t('include_private_repos') %>'
+
     loadRepos = ->
       scope.syncingRepos = false
 
@@ -12,6 +14,12 @@ App.directive 'repoList', ['Repo', 'Sync', 'User', '$timeout', (Repo, Sync, User
       , ->
         alert('Your repos failed to load.')
       )
+
+    loadUserPaymentInfo = ->
+      user = User.get()
+      user.$promise
+        .then (result) -> scope.userCardExists = result.card_exists
+        .catch -> alert("Failed to load current user.")
 
     pollSyncStatus = ->
       successfulSync = (user) ->

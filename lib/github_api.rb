@@ -1,32 +1,28 @@
+require "attr_extras"
 require "octokit"
 require "base64"
-require "active_support/core_ext/object/with_options"
 
 class GithubApi
-  SERVICES_TEAM_NAME = "Services"
-  # PREVIEW_MEDIA_TYPE =
-  #   ::Octokit::Client::Organizations::ORG_INVITATIONS_PREVIEW_MEDIA_TYPE
+  ORGANIZATION_TYPE = "Organization"
+  PREVIEW_MEDIA_TYPE = "application/vnd.github.moondragon+json"
 
-  def initialize(token = ENV["HOUND_GITHUB_TOKEN"])
+  attr_reader :file_cache, :token
+
+  def initialize(token)
     @token = token
+    @file_cache = {}
   end
 
   def client
-    @client ||= Octokit::Client.new(access_token: @token, auto_paginate: true)
+    @client ||= Octokit::Client.new(access_token: token, auto_paginate: true)
+  end
+
+  def scopes
+    client.scopes(token).join(",")
   end
 
   def repos
-    user_repos + org_repos
-  end
-
-  def add_user_to_repo(username, repo_name)
-    repo = repo(repo_name)
-
-    if repo.organization
-      add_user_to_org(username, repo)
-    else
-      client.add_collaborator(repo.full_name, username)
-    end
+    client.repos(accept: PREVIEW_MEDIA_TYPE)
   end
 
   def repo(repo_name)
@@ -76,10 +72,11 @@ class GithubApi
   end
 
   def pull_request_comments(full_repo_name, pull_request_number)
-    repo_path = Octokit::Repository.path full_repo_name
+    # repo_path = Octokit::Repository.path full_repo_name
 
     # client.pull_request_comments does not do auto-pagination.
-    client.paginate "#{repo_path}/pulls/#{pull_request_number}/comments"
+    # client.paginate "#{repo_path}/pulls/#{pull_request_number}/comments"
+    client.pull_request_comments(full_repo_name, pull_request_number)
   end
 
   def pull_request_files(full_repo_name, number)
@@ -87,24 +84,8 @@ class GithubApi
   end
 
   def file_contents(full_repo_name, filename, sha)
-    client.contents(full_repo_name, path: filename, ref: sha)
-  end
-
-  def user_teams
-    client.user_teams
-  end
-
-  def accept_pending_invitations
-    # with_preview_client do |preview_client|
-      pending_memberships =
-        preview_client.organization_memberships(state: "pending")
-      pending_memberships.each do |pending_membership|
-        preview_client.update_organization_membership(
-          pending_membership["organization"]["login"],
-          state: "active"
-        )
-      end
-    # end
+    file_cache["#{full_repo_name}/#{sha}/#{filename}"] ||=
+      client.contents(full_repo_name, path: filename, ref: sha)
   end
 
   def create_pending_status(full_repo_name, sha, description)
@@ -125,93 +106,47 @@ class GithubApi
     )
   end
 
+  def create_error_status(full_repo_name, sha, description, target_url = nil)
+    create_status(
+      repo: full_repo_name,
+      sha: sha,
+      state: "error",
+      description: description,
+      target_url: target_url
+    )
+  end
+
+  def add_collaborator(repo_name, username)
+    client.add_collaborator(
+      repo_name,
+      username,
+      accept: "application/vnd.github.ironman-preview+json",
+    )
+  end
+
+  def remove_collaborator(repo_name, username)
+    # not sure if we need the accept header
+    client.remove_collaborator(
+      repo_name,
+      username,
+      accept: "application/vnd.github.ironman-preview+json",
+    )
+  end
+
   private
-
-  def add_user_to_org(username, repo)
-    repo_teams = client.repository_teams(repo.full_name)
-    admin_team = admin_access_team(repo_teams)
-
-    if admin_team
-      add_user_to_team(username, admin_team.id)
-    else
-      add_user_and_repo_to_services_team(username, repo)
-    end
-  end
-
-  def admin_access_team(repo_teams)
-    token_bearer = GithubUser.new(self)
-
-    repo_teams.detect do |repo_team|
-      token_bearer.has_admin_access_through_team?(repo_team.id)
-    end
-  end
-
-  def add_user_and_repo_to_services_team(username, repo)
-    team = find_team(SERVICES_TEAM_NAME, repo)
-
-    if team
-      client.add_team_repository(team.id, repo.full_name)
-    else
-      team = create_team(SERVICES_TEAM_NAME, repo)
-    end
-
-    add_user_to_team(username, team.id)
-  end
-
-  def add_user_to_team(username, team_id)
-    # with_preview_client do |preview_client|
-    #   preview_client.add_team_membership(team_id, username)
-    # end
-  rescue Octokit::NotFound
-    false
-  end
-
-  def find_team(name, repo)
-    client.org_teams(repo.organization.login).detect do |team|
-      team.name.downcase == name.downcase
-    end
-  end
-
-  def create_team(name, repo)
-    team_options = {
-      name: name,
-      repo_names: [repo.full_name],
-      permission: "push"
-    }
-    client.create_team(repo.organization.login, team_options)
-  end
-
-  def user_repos
-    authorized_repos(client.repos)
-  end
-
-  def org_repos
-    repos = orgs.flat_map do |org|
-      client.org_repos(org[:login])
-    end
-
-    authorized_repos(repos)
-  end
-
-  def orgs
-    client.orgs
-  end
 
   def authorized_repos(repos)
     repos.select { |repo| repo.permissions.admin }
   end
 
-  # def with_preview_client(&block)
-  #   client.with_options(accept: PREVIEW_MEDIA_TYPE, &block)
-  # end
-
-  def create_status(repo:, sha:, state:, description:)
+  def create_status(repo:, sha:, state:, description:, target_url: nil)
     client.create_status(
       repo,
       sha,
       state,
       context: "hound",
-      description: description
+      description: description,
+      target_url: target_url
     )
   rescue Octokit::NotFound
     # noop

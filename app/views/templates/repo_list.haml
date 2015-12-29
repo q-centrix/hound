@@ -1,16 +1,14 @@
-%nav
-  %ul
-    %li.pull-left
-      %span.active-count
-        #{t('active_repos')}:
-        {{(repos | filter:{active: true}).length}} of {{repos.length}}
-    %li.pull-right
-      %a{'href' => '', 'ng-click' => 'sync()', 'ng-class' => '{disabled: syncingRepos}'}
-        %i.fa.fa-refresh
-        %span {{ syncButtonText }}
+%nav.repo-tools
   .search-wrapper
     %i.fa.fa-search
     %input.search{'type' => 'text', 'placeholder' => t('search_placeholder'), 'ng-model' => 'search.full_github_name'}
+  - unless current_user.has_access_to_private_repos?
+    .include-private-repos-wrapper
+      = button_to "/auth/github?access=full", class: "include-private-repos", "ng-disabled" => "syncingRepos" do
+        %span {{ includePrivateReposButtonText }}
+  .refresh-wrapper
+    %button{'class' => 'refresh', 'ng-click' => 'sync()', 'ng-disabled' => 'syncingRepos'}
+      %span {{ syncButtonText }}
 
 .loading{'ng-show' => 'syncingRepos'}
   .dot

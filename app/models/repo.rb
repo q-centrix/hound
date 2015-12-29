@@ -1,9 +1,9 @@
 class Repo < ActiveRecord::Base
-  has_many :memberships
-  has_many :users, through: :memberships
   has_many :builds
-
+  has_many :memberships, dependent: :destroy
+  belongs_to :owner
   has_one :subscription
+  has_many :users, through: :memberships
 
   alias_attribute :name, :full_github_name
 
@@ -22,16 +22,10 @@ class Repo < ActiveRecord::Base
       find_by(github_id: attributes[:github_id]) ||
       Repo.new
 
-    repo.update!(attributes)
-
-    repo
-  end
-
-  def self.find_and_update(github_id, repo_name)
-    repo = find_by(github_id: github_id)
-
-    if repo && repo.full_github_name != repo_name
-      repo.update(full_github_name: repo_name)
+    begin
+      repo.update!(attributes)
+    rescue ActiveRecord::RecordInvalid => error
+      report_update_failure(error, attributes)
     end
 
     repo
@@ -55,8 +49,12 @@ class Repo < ActiveRecord::Base
     end
   end
 
-  def exempt?
-    ENV["EXEMPT_ORGS"] && ENV["EXEMPT_ORGS"].split(",").include?(organization)
+  def bulk?
+    BulkCustomer.where(org: organization).any?
+  end
+
+  def total_violations
+    builds.sum(:violations_count)
   end
 
   private
@@ -66,4 +64,15 @@ class Repo < ActiveRecord::Base
       full_github_name.split("/").first
     end
   end
+
+  def self.report_update_failure(error, attributes)
+    Raven.capture_exception(
+      error,
+      extra: {
+        github_id: attributes[:github_id],
+        full_github_name: attributes[:full_github_name],
+      }
+    )
+  end
+  private_class_method :report_update_failure
 end

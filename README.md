@@ -1,5 +1,4 @@
 Hound (Q-Centrix bootleg)
-=====
 
 **Hound is wonderful open source code built by Thoughtbot with a permissive MIT
 license of their copyright. At Q-Centrix, we deploy this version of hound to

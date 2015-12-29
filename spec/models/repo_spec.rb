@@ -1,10 +1,12 @@
-require "spec_helper"
+require "rails_helper"
 
 describe Repo do
-  it { should have_many(:users).through(:memberships) }
   it { should have_many :builds }
   it { should validate_presence_of :full_github_name }
   it { should validate_presence_of :github_id }
+  it { should belong_to :owner }
+  it { should have_many(:users).through(:memberships) }
+  it { should have_many(:memberships).dependent(:destroy) }
 
   it "validates uniqueness of github_id" do
     create(:repo)
@@ -12,30 +14,21 @@ describe Repo do
     expect(subject).to validate_uniqueness_of(:github_id)
   end
 
-  describe "#exempt?" do
-    context "when repo is exempt" do
+  describe "#bulk?" do
+    context "when repo is bulk" do
       it "returns true" do
+        create(:bulk_customer, org: "thoughtbot")
         repo = Repo.new(full_github_name: "thoughtbot/hound")
 
-        expect(repo).to be_exempt
+        expect(repo).to be_bulk
       end
     end
 
-    context "when repo is not exempt" do
+    context "when repo is not bulk" do
       it "returns false" do
         repo = Repo.new(full_github_name: "jimbob/hound")
 
-        expect(repo).not_to be_exempt
-      end
-    end
-
-    context "without exempt organizations" do
-      it "returns false" do
-        without_exempt_organizations
-
-        repo = Repo.new(full_github_name: "jimbob/hound")
-
-        expect(repo).not_to be_exempt
+        expect(repo).not_to be_bulk
       end
     end
 
@@ -43,7 +36,7 @@ describe Repo do
       it "returns false" do
         repo = Repo.new(full_github_name: nil)
 
-        expect(repo).not_to be_exempt
+        expect(repo).not_to be_bulk
       end
     end
   end
@@ -142,23 +135,33 @@ describe Repo do
         expect(repo.reload).to be_present
       end
     end
-  end
 
-  describe ".find_and_update" do
-    context "when repo name doesn't match db record" do
-      it "updates the record" do
-        new_repo_name = "new/name"
-        repo = create(:repo, name: "foo/bar")
+    context "when one repo has taken the github name and another taken id" do
+      it "repors update failure" do
+        github_name = "foo/bar"
+        github_id = 40023
+        _repo_with_id = create(:repo, github_id: github_id)
+        _repo_with_name = create(:repo, full_github_name: github_name)
+        new_attributes = { github_id: github_id, full_github_name: github_name }
+        allow(Raven).to receive(:capture_exception)
 
-        Repo.find_and_update(repo.github_id, new_repo_name)
-        repo.reload
+        Repo.find_or_create_with(new_attributes)
 
-        expect(repo.full_github_name).to eq new_repo_name
+        expect(Raven).to have_received(:capture_exception).with(
+          instance_of(ActiveRecord::RecordInvalid),
+          extra: { github_id: github_id, full_github_name: github_name }
+        )
       end
     end
   end
 
-  def without_exempt_organizations
-    allow(ENV).to receive(:[]).with("EXEMPT_ORGS")
+  describe "#total_violations" do
+    it "returns a sum of all the violations for the repo" do
+      repo = create(:repo)
+      create(:build, violations_count: 5, repo: repo)
+      create(:build, violations_count: 3, repo: repo)
+
+      expect(repo.total_violations).to eq 8
+    end
   end
 end

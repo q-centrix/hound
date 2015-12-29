@@ -1,5 +1,3 @@
-require 'json'
-
 class Payload
   pattr_initialize :unparsed_data
 
@@ -32,18 +30,57 @@ class Payload
   end
 
   def ping?
-    data['zen']
+    data["zen"]
   end
 
-  def repository_owner
+  def pull_request?
+    pull_request.present?
+  end
+
+  def repository_owner_id
+    repository["owner"]["id"]
+  end
+
+  def repository_owner_name
     repository["owner"]["login"]
+  end
+
+  def repository_owner_is_organization?
+    repository["owner"]["type"] == GithubApi::ORGANIZATION_TYPE
+  end
+
+  def build_data
+    {
+      "number" => pull_request_number,
+      "action" => action,
+      "pull_request" => {
+        "changed_files" => changed_files,
+        "head" => {
+          "sha" => head_sha,
+        }
+      },
+      "repository" => {
+        "id" => github_repo_id,
+        "full_name" => full_repo_name,
+        "private" => private_repo?,
+        "owner" => {
+          "id" => repository_owner_id,
+          "login" => repository_owner_name,
+          "type" => repository["owner"]["type"],
+        }
+      }
+    }
+  end
+
+  def private_repo?
+    repository["private"]
   end
 
   private
 
   def parse_data
     if unparsed_data.is_a? String
-      JSON.parse(unparsed_data)
+      Config::Parser.json(unparsed_data)
     else
       unparsed_data
     end

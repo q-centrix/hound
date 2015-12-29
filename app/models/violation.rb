@@ -1,27 +1,23 @@
-# Hold file, line, and violation message values.
+# Hold file, line number, and violation message values.
 # Built by style guides.
 # Printed by Commenter.
 class Violation < ActiveRecord::Base
-  belongs_to :build
+  belongs_to :file_review
 
-  validates :build, presence: true
-  validates :filename, presence: true
+  delegate :count, to: :messages, prefix: true
+  delegate :filename, to: :file_review
 
-  attr_writer :line
+  after_create :increment_build_violations_count
 
-  def add_messages(new_messages)
-    self[:messages].concat(new_messages)
+  def add_message(message)
+    self[:messages] << message
   end
 
   def messages
     self[:messages].uniq
   end
 
-  def on_changed_line?
-    line.changed?
+  def increment_build_violations_count
+    file_review.build.increment!(:violations_count, messages_count)
   end
-
-  private
-
-  attr_reader :line
 end

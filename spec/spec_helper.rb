@@ -1,35 +1,20 @@
-ENV['RAILS_ENV'] ||= 'test'
+$: << File.expand_path("../..", __FILE__)
 
-require 'fast_spec_helper'
-require 'config/environment'
-require 'rspec/rails'
+require "active_support"
+require "active_support/core_ext"
+require "attr_extras"
+require "byebug"
+require "webmock/rspec"
 
-ActiveRecord::Migration.maintain_test_schema!
+Dir["spec/support/**/*.rb"].each { |f| require f }
 
 RSpec.configure do |config|
-  Analytics.backend = FakeAnalyticsRuby.new
+  config.order = "random"
+  config.include GithubApiHelper
+  config.include StripeApiHelper
+  WebMock.disable_net_connect!(allow_localhost: true)
 
-  config.before do
-    DatabaseCleaner.clean
+  config.define_derived_metadata do |meta|
+    meta[:aggregate_failures] = true
   end
-
-  config.infer_base_class_for_anonymous_controllers = false
-  config.infer_spec_type_from_file_location!
-  config.include AnalyticsHelper
-  config.include AuthenticationHelper
-  config.include Features, type: :feature
-  config.include HttpsHelper
-  config.include OauthHelper
-  config.include FactoryGirl::Syntax::Methods
-  DatabaseCleaner.strategy = :deletion
-  Resque.inline = true
-end
-
-Capybara.configure do |config|
-  config.javascript_driver = :webkit
-  config.default_wait_time = 4
-end
-
-OmniAuth.configure do |config|
-  config.test_mode = true
 end

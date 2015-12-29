@@ -1,8 +1,5 @@
-require 'octokit'
+class LargeBuildJob < ApplicationJob
+  include Buildable
 
-class LargeBuildJob
-  extend Retryable
-  extend Buildable
-
-  @queue = :low
+  queue_as :low
 end

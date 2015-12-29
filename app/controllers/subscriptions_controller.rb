@@ -1,13 +1,12 @@
 class SubscriptionsController < ApplicationController
   class FailedToActivate < StandardError; end
 
+  before_action :check_subscription_presence, only: :destroy
   before_action :update_email_address
-
-  respond_to :json
 
   def create
     if activator.activate && create_subscription
-      analytics.track_subscribed(repo)
+      analytics.track_repo_activated(repo)
 
       render json: repo, status: :created
     else
@@ -19,7 +18,7 @@ class SubscriptionsController < ApplicationController
 
   def destroy
     if activator.deactivate && delete_subscription
-      analytics.track_unsubscribed(repo)
+      analytics.track_repo_deactivated(repo)
 
       render json: repo, status: :created
     else
@@ -38,7 +37,8 @@ class SubscriptionsController < ApplicationController
   end
 
   def github_token
-    session.fetch(:github_token)
+    # session.fetch(:github_token)
+    current_user.token
   end
 
   def create_subscription
@@ -47,6 +47,15 @@ class SubscriptionsController < ApplicationController
 
   def delete_subscription
     RepoSubscriber.unsubscribe(repo, repo.subscription.user)
+  end
+
+  def check_subscription_presence
+    if repo.subscription.blank?
+      render(
+        json: { errors: ["No subscription exists for this repo"] },
+        status: :conflict
+      )
+    end
   end
 
   def update_email_address
