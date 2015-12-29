@@ -11,11 +11,12 @@ class RepoConfig
   pattr_initialize :commit
 
   def enabled_for?(style_guide_name)
-    legacy_config?(style_guide_name) || enabled_in_config?(style_guide_name)
+    style_guide_name == "ruby" && legacy_config? ||
+      enabled_in_config?(style_guide_name)
   end
 
   def for(style_guide_name)
-    if legacy_config?(style_guide_name)
+    if style_guide_name == "ruby" && legacy_config?
       hound_config
     else
       config_file_path = config_path_for(style_guide_name)
@@ -45,10 +46,8 @@ class RepoConfig
     config && (config["enabled"] == true || config["Enabled"] == true)
   end
 
-  def legacy_config?(style_guide_name)
-    # We don't have per-repo config files, so use all available linters.
-    (hound_config.keys & STYLE_GUIDES).empty? &&
-      STYLE_GUIDES.include?(style_guide_name)
+  def legacy_config?
+    (hound_config.keys & STYLE_GUIDES).empty?
   end
 
   def hound_config
