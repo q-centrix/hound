@@ -8,11 +8,11 @@ class HoundConfig
     python
     swift
   )
+  # TODO add javascript/eslint here?
   LANGUAGES = %w(
     coffeescript
     go
     haml
-    javascript
     python
     ruby
     scss
