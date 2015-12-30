@@ -2,17 +2,15 @@ class ActivationsController < ApplicationController
   class FailedToActivate < StandardError; end
   class CannotActivatePaidRepo < StandardError; end
 
-  respond_to :json
-
   before_action :check_repo_plan
 
   def create
     if activator.activate
-      analytics.track_activated(repo)
-
+      analytics.track_repo_activated(repo)
       render json: repo, status: :created
     else
-      head 502
+      analytics.track_repo_activation_failed(repo)
+      render json: { errors: activator.errors }, status: 502
     end
   end
 
@@ -25,7 +23,7 @@ class ActivationsController < ApplicationController
   end
 
   def activator
-    RepoActivator.new(repo: repo, github_token: github_token)
+    @activator ||= RepoActivator.new(repo: repo, github_token: github_token)
   end
 
   def repo
@@ -33,6 +31,6 @@ class ActivationsController < ApplicationController
   end
 
   def github_token
-    session.fetch(:github_token)
+    current_user.token
   end
 end

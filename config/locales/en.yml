@@ -1,9 +1,45 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
 en:
-  sync_repos: 'Refresh repo list'
-  syncing_repos: 'Loading repos...'
-  authenticate: 'Sign In with GitHub'
-  active_repos: 'Active repos'
-  search_placeholder: 'search by repo or organization name'
+  sync_repos: "Refresh repo list"
+  include_private_repos: "Include private repos"
+  syncing_repos: "Loading..."
+  authenticate: "Sign In with GitHub"
+  sign_out: "Sign Out"
+  active_repos: "Active repos"
+  search_placeholder: "Search by repo"
+  pending_status: "Hound is busy reviewing changes..."
+  cannot_activate_repo: "Only repo admins can activate"
+  complete_status:
+    zero: "No violations found. Woof!"
+    one: "1 violation found."
+    other: "%{count} violations found."
+  config_error_status:
+    "Error parsing config file: %{filename}. Click \"details\" for
+    assistance."
+  hound_error_status: "We've encountered an error while reviewing your code."
+
+  account:
+    bulk_pricing:
+      "If you'd like to pay for Hound in bulk on a monthly or annual
+      basis we're happy to make that happen. Email %{mail_to} with your
+      GitHub org name and the number of repos you'd like to activate."
+    billable_email:
+      invalid: "Email is invalid"
+
+  onboarding:
+    title: "Let's keep that code in style:"
+    step_one_title: "Activate Hound on a repo."
+    step_one_alt_title: "Hound is active on %{count} of your repos!"
+    step_one_desc:
+      "Hound watches for pull requests on all active repos.
+      Activating public repos costs $0; private repos cost $12."
+    step_two_title: "Open a GitHub pull request on the repo."
+    step_two_alt_title: "Open a pull request on an active repo."
+    step_two_desc:
+      "Hound will review all GitHub pull requests that are
+      opened on an activated repo for violations of your style
+      guide."
+    step_three_title: "Hound comments on your pull request."
+    step_three_desc:
+      "If Hound finds any violations of your style guide it will
+      comment inline on the violation in your GitHub pull
+      request."

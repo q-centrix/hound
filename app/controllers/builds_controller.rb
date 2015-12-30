@@ -4,7 +4,9 @@ class BuildsController < ApplicationController
   skip_before_action :authenticate, only: [:create]
 
   def create
-    JobQueue.push(build_job_class, payload.data)
+    if payload.pull_request?
+      build_job_class.perform_later(payload.build_data)
+    end
     head :ok
   end
 
@@ -21,7 +23,7 @@ class BuildsController < ApplicationController
   end
 
   def build_job_class
-    if payload.changed_files < ENV['CHANGED_FILES_THRESHOLD'].to_i
+    if payload.changed_files < Hound::CHANGED_FILES_THRESHOLD
       SmallBuildJob
     else
       LargeBuildJob

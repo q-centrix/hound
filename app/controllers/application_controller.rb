@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   private
 
   def force_https
-    if ENV['ENABLE_HTTPS'] == 'yes'
+    if Hound::HTTPS_ENABLED
       if !request.ssl? && force_https?
         redirect_to protocol: "https://", status: :moved_permanently
       end
@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
   end
 
   def signed_in?
-    current_user.present?
+    current_user.present? && current_user.token.present?
   end
 
   def current_user
