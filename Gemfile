@@ -25,14 +25,10 @@ gem "octokit"
 gem "omniauth-github"
 gem "paranoia", "~> 2.0"
 gem "pg"
-# gem "scss-lint", require: false
-# gem "stripe_event"
-# gem "puma"
 gem "unicorn"
 
 gem "rails", "4.2.4"
 gem "resque", "~> 1.25.0"
-gem "resque-retry"
 gem "resque-scheduler"
 gem "resque-sentry"
 gem "rubocop", "0.34.2"
@@ -49,13 +45,13 @@ group :staging, :production do
 end
 
 group :development, :test do
-  gem "bundler-audit", require: false
   gem "byebug"
   gem "dotenv-rails"
   gem "foreman"
   gem "jasmine-rails"
   gem "poltergeist"
   gem "rspec-rails", ">= 3.4"
+  gem "bundler-audit", require: false
 end
 
 group :test do
