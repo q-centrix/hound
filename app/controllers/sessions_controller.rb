@@ -44,7 +44,6 @@ class SessionsController < ApplicationController
 
   def create_session
     session[:remember_token] = user.remember_token
-    # session[:github_token] = github_token
   end
 
   def destroy_session
