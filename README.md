@@ -2,8 +2,30 @@ Hound (Q-Centrix bootleg)
 
 **Hound is wonderful open source code built by Thoughtbot with a permissive MIT
 license of their copyright. At Q-Centrix, we deploy this version of hound to
-heroku using free dynos to check our code (a simple ``git push heroku master``
+heroku to check our code (a simple ``git push heroku master``
 after defining your environment variables should work)**
+
+Visit https://q-centrix-hound.herokuapp.com/repos to add new repos to the scan list.
+
+**Q-Centrix Dev setup instructions**
+
+1. Run `bin/setup`
+2. Update .env with the following
+   - Remove DATABASE_URL
+   - Set ENABLE_HTTPS to no
+   - Set HOUND_GITHUB_TOKEN to qcx-ci token
+   - Set HOUND_GITHUB_USERNAME to qcx-ci
+   - Set RACK_ENV and RAILS_ENV to development
+   - Set SECRET_KEY_BASE to whatever
+3. Create a ngrok account and follow their instructions for local setup
+4. `ngrok http 5000`
+5. Setup a development application in Github
+   - Set both URLs to the tunnel URL found on your ngrok [dashboard](https://dashboard.ngrok.com/).
+   - Copy Client ID/Client Secret and add to .env
+   - Update Github webook to point at the dashboard URL.
+6. Run `foreman start`
+   - Requires redis to be installed
+
 
 **What follows is from Thoughtbot's documentation, this project may not be up to
 date with the real version**
@@ -14,8 +36,6 @@ Hound reviews GitHub pull requests for style guide violations. [View the style
 guide &rarr;](https://github.com/thoughtbot/guides/tree/master/style)
 
 This will deploy to heroku on every commit to master.
-
-Visit https://q-centrix-hound.herokuapp.com/repos to add new repos to the scan list.
 
 ## Configure the Hound Service
 
