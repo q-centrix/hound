@@ -1,12 +1,6 @@
 class HoundConfig
   CONFIG_FILE = ".hound.yml"
   BETA_LANGUAGES = %w(
-    eslint
-    jscs
-    jshint
-    mdast
-    python
-    swift
   )
   # TODO add javascript/eslint here?
   LANGUAGES = %w(
