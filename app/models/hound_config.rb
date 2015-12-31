@@ -30,7 +30,7 @@ class HoundConfig
   end
 
   def fail_on_violations?
-    !!(content["fail_on_violations"])
+    true
   end
 
   private
