@@ -24,7 +24,7 @@ class HoundConfig
   end
 
   def fail_on_violations?
-    true
+    false
   end
 
   private
