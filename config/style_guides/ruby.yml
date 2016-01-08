@@ -104,7 +104,6 @@ Style/CollectionMethods:
   PreferredMethods:
     collect: map
     collect!: map!
-    detect: find
     find_all: select
     inject: reduce
 Style/CommentAnnotation:
