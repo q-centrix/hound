@@ -2,6 +2,7 @@ require "spec_helper"
 require "app/models/config/base"
 require "app/models/config/ruby"
 require "app/models/hound_config"
+require "app/models/config/parser"
 require "app/models/config/parser_error"
 
 describe Config::Ruby do
@@ -27,6 +28,24 @@ describe Config::Ruby do
 
         expect(config.content).to eq("LineLength" => { "Max" => 90 })
       end
+    end
+
+    it "dumps the config content to yaml" do
+      rubocop = <<-EOS.strip_heredoc
+        Style/Encoding:
+          Enabled: true
+      EOS
+      commit = stubbed_commit(
+        "config/rubocop.yml" => rubocop,
+      )
+
+      config = build_config(commit)
+
+      expect(config.content.to_yaml).to eq <<-YML.strip_heredoc
+        ---
+        Style/Encoding:
+          Enabled: true
+      YML
     end
   end
 
@@ -131,6 +150,7 @@ describe Config::Ruby do
         },
       },
     )
+
     Config::Ruby.new(hound_config, "ruby")
   end
 end

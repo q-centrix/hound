@@ -48,3 +48,6 @@ You will have to click a button to show private repos.
   - Legacy configuration
 
 See [thoughtbot's](https://github.com/thoughtbot/hound/blob/master/README.md) README for more info.
+
+Hound is Copyright © 2012-2016 thoughtbot, inc. It is free software, and may be
+redistributed under the terms specified in the [LICENSE](LICENSE) file.

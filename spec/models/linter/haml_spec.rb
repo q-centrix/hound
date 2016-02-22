@@ -83,6 +83,57 @@ describe Linter::Haml do
           "Hash attribute should end with no space before the closing brace",
         ]
       end
+
+      context "with an invalid HAML format" do
+        it "returns the violation with the line number" do
+          content = <<-EOS.strip_heredoc
+            .main
+              %div
+                  %span
+          EOS
+          patch = <<-EOS.strip_heredoc
+            @@ -1,1 +1,3 @@
+              .main
+            +   %div
+            +       %span
+          EOS
+          commit_file = CommitFile.new(
+            filename: "foo.haml",
+            commit: nil,
+            patch: patch,
+          )
+          linter = build_linter({})
+          allow(commit_file).to receive(:content).and_return(content)
+
+          violations = linter.file_review(commit_file).violations
+
+          expect(violations.count).to eq 1
+          expect(violations.first.line_number).to eq 3
+          expect(violations.first.messages).to eq [
+            "The line was indented 2 levels deeper than the previous line.",
+          ]
+        end
+      end
+    end
+
+    context "when RuboCop linter is enabled" do
+      it "does not raise missing dir for Tempfile error" do
+        content = <<-EOS.strip_heredoc
+          %div
+        EOS
+        commit_file = build_commit_file(
+          filename: "/does/not/exist/foo.haml",
+          content: content,
+        )
+        config = {
+          "linters" => {
+            "RuboCop" => { "enabled" => true },
+          },
+        }
+        linter = build_linter(config)
+
+        expect { linter.file_review(commit_file) }.not_to raise_error
+      end
     end
   end
 

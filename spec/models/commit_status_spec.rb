@@ -4,7 +4,7 @@ describe CommitStatus do
   describe "#set_pending" do
     it "sets the pending status on GithubApi" do
       github_api = stubbed_github_api(:create_pending_status)
-      repo_name = "thoughtbot/hound"
+      repo_name = "houndci/hound"
       sha = "abc123"
       token = "token"
       commit_status = CommitStatus.new(
@@ -26,7 +26,7 @@ describe CommitStatus do
   describe "#set_success" do
     it "sets the create success status on GithubApi" do
       github_api = stubbed_github_api(:create_success_status)
-      repo_name = "thoughtbot/hound"
+      repo_name = "houndci/hound"
       sha = "abc123"
       token = "token"
       violation_count = 5
@@ -49,7 +49,7 @@ describe CommitStatus do
   describe "#set_failure" do
     it "sets the error status for GithubApi" do
       github_api = stubbed_github_api(:create_error_status)
-      repo_name = "thoughtbot/hound"
+      repo_name = "houndci/hound"
       sha = "abc123"
       token = "token"
       violation_count = 5
@@ -72,22 +72,22 @@ describe CommitStatus do
   describe "#set_config_error" do
     it "sets the error status for GithubApi" do
       github_api = stubbed_github_api(:create_error_status)
-      repo_name = "thoughtbot/hound"
+      repo_name = "houndci/hound"
       sha = "abc123"
       token = "token"
-      filename = "config/.rubocop.yml"
+      message = "invalid config"
       commit_status = CommitStatus.new(
         repo_name: repo_name,
         sha: sha,
         token: token,
       )
 
-      commit_status.set_config_error(filename)
+      commit_status.set_config_error(message)
 
       expect(github_api).to have_received(:create_error_status).with(
         repo_name,
         sha,
-        I18n.t(:config_error_status, filename: filename),
+        message,
         configuration_url,
       )
     end
@@ -96,7 +96,7 @@ describe CommitStatus do
   describe "#set_internal_error" do
     it "sets the error status for GithubApi" do
       github_api = stubbed_github_api(:create_error_status)
-      repo_name = "thoughtbot/hound"
+      repo_name = "houndci/hound"
       sha = "abc123"
       token = "token"
       commit_status = CommitStatus.new(

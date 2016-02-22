@@ -17,7 +17,13 @@ describe StyleChecker do
     it "only fetches content for supported files" do
       ruby_file = double("GithubFile", filename: "ruby.rb", patch: "foo")
       bogus_file = double("GithubFile", filename: "[:facebook]", patch: "bar")
-      head_commit = stub_head_commit(ruby_file.filename => "")
+      config = <<-HOUND.strip_heredoc
+        ruby:
+          enabled: true
+      HOUND
+      head_commit = stub_head_commit(
+        ".hound.yml" => config,
+      )
       pull_request = PullRequest.new(payload_stub, "anything")
       allow(pull_request).to receive(:head_commit).and_return(head_commit)
       allow(pull_request).to receive(:modified_github_files).
@@ -118,6 +124,26 @@ describe StyleChecker do
     end
 
     context "for a JavaScript file" do
+      context "when the default javascript linter JSHint is enabled" do
+        it "creates violations" do
+          commit_file = stub_commit_file("test.js", "var test = 'test'")
+          head_commit = stub_head_commit(
+            HoundConfig::CONFIG_FILE => <<-EOS.strip_heredoc
+              javascript:
+                enabled: true
+            EOS
+          )
+          pull_request = stub_pull_request(
+            commit_files: [commit_file],
+            head_commit: head_commit,
+          )
+
+          violation_messages = pull_request_violations(pull_request)
+
+          expect(violation_messages).to be_empty
+        end
+      end
+
       context "when Eslint is enabled" do
         it "creates violations" do
           commit_file = stub_commit_file("test.js", "var test = 'test'")
@@ -135,10 +161,7 @@ describe StyleChecker do
 
           violation_messages = pull_request_violations(pull_request)
 
-          expect(violation_messages).to eq [
-            "Missing semicolon.",
-            "'test' is defined but never used.",
-          ]
+          expect(violation_messages).to be_empty
         end
       end
 
@@ -159,81 +182,7 @@ describe StyleChecker do
 
           violation_messages = pull_request_violations(pull_request)
 
-          expect(violation_messages).to eq [
-            "Missing semicolon.",
-            "'test' is defined but never used.",
-          ]
-        end
-      end
-
-      context "when JSHint is enabled" do
-        it "creates violations" do
-          commit_file = stub_commit_file("test.js", "var test = 'test'")
-          head_commit = stub_head_commit(
-            HoundConfig::CONFIG_FILE => <<-EOS.strip_heredoc
-              jshint:
-                enabled: true
-                config_file: config/.jshintrc
-              javascript:
-                enabled: false
-            EOS
-          )
-          pull_request = stub_pull_request(
-            commit_files: [commit_file],
-            head_commit: head_commit,
-          )
-
-          violation_messages = pull_request_violations(pull_request)
-
-          expect(violation_messages).to eq []
-        end
-      end
-
-      context "when a specifc linter is disabled or unconfigured" do
-        context "with style violations" do
-          it "returns violations" do
-            commit_file = stub_commit_file("test.js", "var test = 'test'")
-            pull_request = stub_pull_request(commit_files: [commit_file])
-
-            violation_messages = pull_request_violations(pull_request)
-
-            expect(violation_messages).to include "Missing semicolon."
-          end
-        end
-
-        context "without style violations" do
-          it "returns no violations" do
-            commit_file = stub_commit_file("test.js", "var test = 'test';")
-            pull_request = stub_pull_request(commit_files: [commit_file])
-
-            violation_messages = pull_request_violations(pull_request)
-
-            expect(violation_messages).not_to include "Missing semicolon."
-          end
-        end
-
-        context "an excluded file" do
-          it "returns no violations" do
-            config = <<-YAML.strip_heredoc
-              javascript:
-                ignore_file: '.jshintignore'
-            YAML
-
-            head_commit = stub_head_commit(
-              ".hound.yml" => config,
-              ".jshintignore" => "test.js",
-            )
-
-            commit_file = stub_commit_file("test.js", "var test = 'test'")
-            pull_request = stub_pull_request(
-              head_commit: head_commit,
-              commit_files: [commit_file],
-            )
-
-            violation_messages = pull_request_violations(pull_request)
-
-            expect(violation_messages).to be_empty
-          end
+          expect(violation_messages).to be_empty
         end
       end
     end
@@ -358,7 +307,7 @@ describe StyleChecker do
     default_options = {
       HoundConfig::CONFIG_FILE => raw_hound_config,
     }
-    head_commit = double("Commit", file_content: nil)
+    head_commit = double("Commit", file_content: "")
 
     default_options.merge(options).each do |filename, file_contents|
       allow(head_commit).to receive(:file_content).

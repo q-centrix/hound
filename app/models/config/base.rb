@@ -1,6 +1,6 @@
 module Config
   class Base
-    pattr_initialize :hound_config, :linter_name
+    attr_reader_initialize :hound_config, :linter_name
 
     def content
       @content ||= parse(load_content)
@@ -10,6 +10,14 @@ module Config
 
     def excluded_files
       []
+    end
+
+    def linter_names
+      [linter_name]
+    end
+
+    def serialize(data = content)
+      data
     end
 
     private
@@ -59,7 +67,7 @@ module Config
     end
 
     def raise_parse_error(message)
-      raise Config::ParserError.new(message, filename: file_path)
+      raise Config::ParserError.new(message, linter_name: linter_name)
     end
 
     def file_path
@@ -67,7 +75,7 @@ module Config
     end
 
     def linter_config
-      hound_config.content[linter_name]
+      hound_config.content.slice(*linter_names).values.first
     end
 
     def commit

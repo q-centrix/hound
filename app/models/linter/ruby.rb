@@ -1,8 +1,8 @@
 # Determine Ruby style guide violations per-line.
 module Linter
   class Ruby < Base
-    DEFAULT_CONFIG_FILENAME = "ruby.yml"
     FILE_REGEXP = /.+\.rb\z/
+    RUBY_PARSER_VERSION = 2.3
 
     def file_review(commit_file)
       perform_file_review(commit_file)
@@ -39,31 +39,19 @@ module Linter
     end
 
     def parsed_source(commit_file)
-      absolute_filepath = File.expand_path(commit_file.filename)
-      RuboCop::ProcessedSource.new(commit_file.content, absolute_filepath)
+      RuboCop::ProcessedSource.new(
+        commit_file.content,
+        RUBY_PARSER_VERSION,
+        File.join(Rails.root, commit_file.filename),
+      )
     end
 
     def linter_config
-      @linter_config ||= RuboCop::Config.new(merged_config, "")
+      @linter_config ||= config_builder.config
     end
 
-    def merged_config
-      RuboCop::ConfigLoader.merge(default_config, custom_config)
-    rescue TypeError
-      default_config
-    end
-
-    def default_config
-      RuboCop::ConfigLoader.configuration_from_file(default_config_file)
-    end
-
-    def custom_config
-      RuboCop::Config.new(config.content, "").tap do |custom_config|
-        custom_config.add_missing_namespaces
-        custom_config.make_excludes_absolute
-      end
-    rescue NoMethodError
-      RuboCop::Config.new
+    def config_builder
+      RubyConfigBuilder.new(config.content, repository_owner_name)
     end
 
     # This is deprecated in favor of RuboCop's DisplayCopNames option.
@@ -73,13 +61,6 @@ module Linter
         Analytics.new(repository_owner_name).track_show_cop_names
         { debug: true }
       end
-    end
-
-    def default_config_file
-      DefaultConfigFile.new(
-        DEFAULT_CONFIG_FILENAME,
-        repository_owner_name
-      ).path
     end
   end
 end
