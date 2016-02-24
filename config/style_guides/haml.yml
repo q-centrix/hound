@@ -45,7 +45,7 @@ linters:
     enabled: true
 
   RuboCop:
-    enabled: true
+    enabled: false
 
   RubyComments:
     enabled: true
