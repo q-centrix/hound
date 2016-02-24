@@ -1,29 +1,17 @@
-Rails:
-  Enabled: true
 AllCops:
   TargetRubyVersion: 2.2
   Include:
   - "**/*.gemspec"
-  - "**/*.podspec"
   - "**/*.jbuilder"
   - "**/*.rake"
-  - "**/*.opal"
   - "**/Gemfile"
   - "**/Rakefile"
-  - "**/Capfile"
-  - "**/Guardfile"
-  - "**/Podfile"
-  - "**/Thorfile"
-  - "**/Vagrantfile"
-  - "**/Berksfile"
-  - "**/Cheffile"
-  - "**/Vagabondfile"
   Exclude:
-    - 'db/**/*'
-    - 'config/**/*'
-    - 'bin/**/*'
-    - 'spec/dummy/**/*'
     - '.git/**/*'
+    - 'bin/**/*'
+    - 'config/**/*'
+    - 'db/**/*'
+    - 'spec/dummy/**/*'
     - 'vendor/**/*'
 
 Style/AccessModifierIndentation:
@@ -851,10 +839,6 @@ Style/SelfAssignment:
     used.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#self-assignment
   Enabled: true
-Style/SpaceBeforeFirstArg:
-  Description: Checks that exactly one space is used between a method name and the
-    first argument for method calls without parentheses.
-  Enabled: false
 Style/SpaceAfterColon:
   Description: Use spaces after colons.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#spaces-operators
@@ -885,6 +869,10 @@ Style/SpaceBeforeComma:
 Style/SpaceBeforeComment:
   Description: Checks for missing space between code and a comment on the same line.
   Enabled: true
+Style/SpaceBeforeFirstArg:
+  Description: Checks that exactly one space is used between a method name and the
+    first argument for method calls without parentheses.
+  Enabled: false
 Style/SpaceBeforeSemicolon:
   Description: No spaces before semicolons.
   Enabled: true
