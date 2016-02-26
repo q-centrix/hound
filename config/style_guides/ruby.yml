@@ -14,6 +14,9 @@ AllCops:
     - 'spec/dummy/**/*'
     - 'vendor/**/*'
 
+Rails:
+  Enabled: true
+
 Style/AccessModifierIndentation:
   Description: Check indentation of private/protected visibility modifiers.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#indent-public-private-protected
