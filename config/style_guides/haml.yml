@@ -22,6 +22,9 @@ linters:
   EmptyScript:
     enabled: true
 
+  FinalNewline:
+    enabled: true
+
   HtmlAttributes:
     enabled: false
 
