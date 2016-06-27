@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "2.3.0"
+ruby "2.3.1"
 
 gem "active_model_serializers", "0.8.3"
 gem "administrate", ">= 0.1.3"
@@ -32,7 +32,7 @@ gem "resque", "~> 1.25.0"
 gem "resque-scheduler"
 gem "resque-sentry"
 gem "rest-client", ">= 1.8.0"
-gem "rubocop", "~> 0.37.0"
+gem "rubocop"
 gem "sass-rails"
 gem "split", require: "split/dashboard"
 gem "stripe"
@@ -56,7 +56,7 @@ end
 
 group :test do
   gem "capybara", "~> 2.4.0"
-  gem "capybara-webkit", "~> 1.5.1"
+  # gem "capybara-webkit", "~> 1.5.1"
   gem "database_cleaner"
   gem "factory_girl_rails"
   gem "launchy"

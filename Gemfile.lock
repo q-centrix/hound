@@ -75,9 +75,6 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    capybara-webkit (1.5.2)
-      capybara (>= 2.3.0, < 2.5.0)
-      json
     cliver (0.3.2)
     coffee-rails (4.1.1)
       coffee-script (>= 2.2.0)
@@ -379,7 +376,6 @@ DEPENDENCIES
   bundler-audit
   byebug
   capybara (~> 2.4.0)
-  capybara-webkit (~> 1.5.1)
   coffee-rails
   coffeelint
   database_cleaner
@@ -410,7 +406,7 @@ DEPENDENCIES
   resque-sentry
   rest-client (>= 1.8.0)
   rspec-rails (>= 3.4)
-  rubocop (~> 0.37.0)
+  rubocop
   sass-rails
   sentry-raven (>= 0.12.2)
   shoulda-matchers
@@ -420,5 +416,8 @@ DEPENDENCIES
   unicorn
   webmock
 
+RUBY VERSION
+   ruby 2.3.1p112
+
 BUNDLED WITH
-   1.11.2
+   1.12.5
