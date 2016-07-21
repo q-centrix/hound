@@ -580,6 +580,9 @@ Rails/Output:
   - config/**/*.rb
   - db/**/*.rb
   - lib/**/*.rb
+Rails/OutputSafety:
+  Description: Checks for the use of output safety calls like html_safe and raw.
+  Enabled: false
 Rails/ReadWriteAttribute:
   Description: Checks for read_attribute(:attr) and write_attribute(:attr, val).
   Enabled: true
@@ -687,10 +690,6 @@ Style/DefWithParentheses:
   Description: Use def with parentheses when there are arguments.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#method-parens
   Enabled: true
-Style/DeprecatedHashMethods:
-  Description: Checks for use of deprecated Hash methods.
-  StyleGuide: https://github.com/bbatsov/ruby-style-guide#hash-key
-  Enabled: false
 Style/Documentation:
   Description: Document classes and non-namespace modules.
   Enabled: false
