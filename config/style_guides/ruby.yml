@@ -1059,3 +1059,6 @@ Lint/Void:
 Rails/Delegate:
   Description: Prefer delegate method for delegations.
   Enabled: false
+Rails/HttpPositionalArguments:
+  StyleGuide: http://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Rails/HttpPositionalArguments
+  Enabled: false
