@@ -580,6 +580,9 @@ Rails/Output:
   - config/**/*.rb
   - db/**/*.rb
   - lib/**/*.rb
+Rails/DynamicFindBy:
+  Description: This cop checks dynamic `find_by_*` methods. Use `find_by` instead of dynamic method
+  Enabled: false
 Rails/FindBy:
   Description: This cop is used to identify usages of `where.first` and change them to use `find_by` instead.
   Enabled: false
