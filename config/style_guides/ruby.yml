@@ -489,6 +489,8 @@ Metrics/AbcSize:
     conditions.
   Enabled: true
   Max: 15
+  Exclude:
+  - spec/**/*
 Metrics/BlockNesting:
   Description: Avoid excessive block nesting
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#three-is-the-number-thou-shalt-count
@@ -519,6 +521,8 @@ Metrics/MethodLength:
   Enabled: true
   CountComments: false
   Max: 15
+  Exclude:
+  - spec/**/*
 Metrics/ModuleLength:
   CountComments: false
   Max: 100
