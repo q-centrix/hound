@@ -15,6 +15,9 @@ AllCops:
 Rails:
   Enabled: true
 
+Security/Eval:
+  Description: The use of eval represents a serious security risk.
+  Enabled: true
 Style/AccessModifierIndentation:
   Description: Check indentation of private/protected visibility modifiers.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#indent-public-private-protected
@@ -372,9 +375,6 @@ Style/SpaceAroundBlockParameters:
   Description: Checks the spacing inside and after block parameters pipes.
   Enabled: true
   EnforcedStyleInsidePipes: no_space
-  SupportedStyles:
-  - space
-  - no_space
 Style/SpaceAroundEqualsInParameterDefault:
   Description: Checks that the equals signs in parameter default assignments have
     or don't have surrounding space depending on configuration.
@@ -429,17 +429,11 @@ Style/TrailingCommaInArguments:
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-trailing-array-commas
   Enabled: true
   EnforcedStyleForMultiline: no_comma
-  SupportedStyles:
-  - comma
-  - no_comma
 Style/TrailingCommaInLiteral:
   Description: Checks for trailing comma in parameter lists and literals.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-trailing-array-commas
   Enabled: true
   EnforcedStyleForMultiline: no_comma
-  SupportedStyles:
-  - comma
-  - no_comma
 Style/TrivialAccessors:
   Description: Prefer attr_* methods to trivial readers/writers.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#attr_family
@@ -550,16 +544,10 @@ Lint/EndAlignment:
   Description: Align ends correctly.
   Enabled: true
   EnforcedStyleAlignWith: keyword
-  SupportedStyles:
-  - keyword
-  - variable
 Lint/DefEndAlignment:
   Description: Align ends corresponding to defs correctly.
   Enabled: true
   EnforcedStyleAlignWith: start_of_line
-  SupportedStyles:
-  - start_of_line
-  - def
 Rails/ActionFilter:
   Description: Enforces consistent use of action filter methods.
   Enabled: false
@@ -986,9 +974,6 @@ Lint/EndInMethod:
 Lint/EnsureReturn:
   Description: Do not use return in an ensure block.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-return-ensure
-  Enabled: true
-Lint/Eval:
-  Description: The use of eval represents a serious security risk.
   Enabled: true
 Lint/HandleExceptions:
   Description: Don't suppress exception.
