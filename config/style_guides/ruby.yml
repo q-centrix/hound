@@ -11,6 +11,7 @@ AllCops:
     - 'db/**/*'
     - 'spec/dummy/**/*'
     - 'vendor/**/*'
+  DisplayCopNames: true
 
 Rails:
   Enabled: true
@@ -483,6 +484,10 @@ Metrics/AbcSize:
     conditions.
   Enabled: true
   Max: 15
+  Exclude:
+  - spec/**/*
+Metrics/BlockLength:
+  Enabled: true
   Exclude:
   - spec/**/*
 Metrics/BlockNesting:
