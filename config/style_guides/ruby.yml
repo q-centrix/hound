@@ -224,7 +224,7 @@ Style/IndentHash:
 Style/LambdaCall:
   Description: Use lambda.call(...) instead of lambda.(...).
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#proc-call
-  Enabled: true
+  Enabled: false
   EnforcedStyle: braces
   SupportedStyles:
   - call
