@@ -126,6 +126,8 @@ Style/EmptyLineBetweenDefs:
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#empty-lines-between-methods
   Enabled: true
   AllowAdjacentOneLineDefs: false
+Style/EmptyLineAfterMagicComment:
+  Enabled: false
 Style/EmptyLinesAroundBlockBody:
   Description: Keeps track of empty lines around block bodies.
   Enabled: true
