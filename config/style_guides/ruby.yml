@@ -16,6 +16,12 @@ AllCops:
 Rails:
   Enabled: true
 
+
+Rails/HasManyOrHasOneDependent:
+  Description: ENABLE THIS AFTER https://github.com/bbatsov/rubocop/issues/4751 IS RELEASED
+  Enabled: false
+
+
 Security/Eval:
   Description: The use of eval represents a serious security risk.
   Enabled: true
