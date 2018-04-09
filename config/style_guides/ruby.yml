@@ -559,7 +559,7 @@ Lint/AssignmentInCondition:
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#safe-assignment-in-condition
   Enabled: false
   AllowSafeAssignment: true
-Lint/RescueWithoutErrorClass:
+Style/RescueStandardError:
   Enabled: false
 Layout/EndAlignment:
   Description: Align ends correctly.
