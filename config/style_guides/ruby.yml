@@ -25,6 +25,8 @@ Rails/HasManyOrHasOneDependent:
 Rails/LexicallyScopedActionFilter:
   StyleGuide: http://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Rails/LexicallyScopedActionFilter
   Enabled: false
+Rails/SkipsModelValidations:
+  Enabled: false
 
 Security/Eval:
   Description: The use of eval represents a serious security risk.
