@@ -17,11 +17,8 @@ AllCops:
 
 Rails:
   Enabled: true
-
-Performance/FlatMap:
-  Enabled: true
-Performance/RedundantMerge:
-  Enabled: true
+Performance:
+  enabled: true
 Rails/HasManyOrHasOneDependent:
   Description: ENABLE THIS AFTER https://github.com/bbatsov/rubocop/issues/4751 IS RELEASED
   Enabled: false
