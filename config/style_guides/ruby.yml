@@ -40,7 +40,7 @@ Layout/AccessModifierIndentation:
 Layout/HashAlignment:
   Description: Align the elements of a hash literal if they span more than one line.
   Enabled: true
-  EnforcedHashRocketStyle: key
+  EnforcedHashRocketStyle: table
   EnforcedColonStyle: key
   EnforcedLastArgumentHashStyle: always_inspect
   SupportedLastArgumentHashStyles:
