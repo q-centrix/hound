@@ -909,7 +909,7 @@ Style/StructInheritance:
   Description: Checks for inheritance from Struct.new.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-extend-struct-new
   Enabled: true
-Layout/Tab:
+Layout/IndentationStyle:
   Description: No hard tabs.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#spaces-indentation
   Enabled: true
@@ -976,7 +976,7 @@ Lint/EmptyEnsure:
 Lint/EmptyInterpolation:
   Description: Checks for empty string interpolation.
   Enabled: true
-Lint/EndInMethod:
+Style/EndBlock:
   Description: END blocks should not be placed inside method definitions.
   Enabled: true
 Lint/EnsureReturn:
