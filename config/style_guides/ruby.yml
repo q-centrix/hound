@@ -1049,6 +1049,10 @@ Lint/RedundantStringCoercion:
   Description: Checks for Object#to_s usage in string interpolation.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-to-s
   Enabled: true
+Lint/StructNewOverride:
+  Description: 'Disallow overriding the `Struct` built-in methods via `Struct.new`.'
+  Enabled: true
+  VersionAdded: '0.81'
 Lint/UnderscorePrefixedVariableName:
   Description: Do not use prefix `_` for a variable that is used.
   Enabled: false
