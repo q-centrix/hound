@@ -784,6 +784,16 @@ Lint/FlipFlop:
   Description: Checks for flip flops
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-flip-flops
   Enabled: false
+Style/HashTransformKeys:
+  Description: 'Prefer `transform_keys` over `each_with_object` and `map`.'
+  Enabled: true
+  VersionAdded: '0.80'
+  Safe: false
+Style/HashTransformValues:
+  Description: 'Prefer `transform_values` over `each_with_object` and `map`.'
+  Enabled: true
+  VersionAdded: '0.80'
+  Safe: false
 Style/IfWithSemicolon:
   Description: Do not use if x; .... Use the ternary operator instead.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-semicolon-ifs
