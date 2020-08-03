@@ -911,6 +911,14 @@ Style/RescueModifier:
   Description: Avoid using rescue in its modifier form.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-rescue-modifiers
   Enabled: true
+Style/RedundantRegexpCharacterClass:
+  Description: 'Checks for unnecessary single-element Regexp character classes.'
+  Enabled: true
+  VersionAdded: '0.85'
+Style/RedundantRegexpEscape:
+  Description: 'Checks for redundant escapes in Regexps.'
+  Enabled: true
+  VersionAdded: '0.85'
 Style/SelfAssignment:
   Description: Checks for places where self-assignment shorthand should have been
     used.
