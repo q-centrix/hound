@@ -730,10 +730,6 @@ Style/EmptyLiteral:
   Description: Prefer literals to Array.new/Hash.new/String.new.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#literal-array-hash
   Enabled: true
-Style/EndBlock:
-  Description: Avoid the use of END blocks.
-  StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-END-blocks
-  Enabled: true
 Layout/EndOfLine:
   Description: Use Unix-style line endings.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#crlf
