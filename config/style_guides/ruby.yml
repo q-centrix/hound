@@ -723,6 +723,18 @@ Layout/EmptyLines:
 Layout/EmptyLinesAroundAccessModifier:
   Description: Keep blank lines around access modifiers.
   Enabled: true
+Layout/EmptyLinesAroundAttributeAccessor:
+  Description: "Keep blank lines around attribute accessors."
+  StyleGuide: '#empty-lines-around-attribute-accessor'
+  Enabled: pending
+  VersionAdded: '0.83'
+  VersionChanged: '0.84'
+  AllowAliasSyntax: true
+  AllowedMethods:
+    - alias_method
+    - public
+    - protected
+    - private
 Layout/EmptyLinesAroundMethodBody:
   Description: Keeps track of empty lines around method bodies.
   Enabled: true
