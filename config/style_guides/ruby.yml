@@ -982,6 +982,10 @@ Lint/DeprecatedOpenSSLConstant:
   Description: "Don't use algorithm constants for `OpenSSL::Cipher` and `OpenSSL::Digest`."
   Enabled: true
   VersionAdded: '0.84'
+Lint/DuplicateElsifCondition:
+  Description: 'Do not repeat conditions used in if `elsif`.'
+  Enabled: true
+  VersionAdded: '0.88'
 Lint/DuplicateMethods:
   Description: Check for duplicate methods calls.
   Enabled: true
