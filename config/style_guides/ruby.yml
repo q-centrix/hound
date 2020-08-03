@@ -726,7 +726,7 @@ Layout/EmptyLinesAroundAccessModifier:
 Layout/EmptyLinesAroundAttributeAccessor:
   Description: "Keep blank lines around attribute accessors."
   StyleGuide: '#empty-lines-around-attribute-accessor'
-  Enabled: pending
+  Enabled: true
   VersionAdded: '0.83'
   VersionChanged: '0.84'
   AllowAliasSyntax: true
