@@ -911,6 +911,10 @@ Style/RescueModifier:
   Description: Avoid using rescue in its modifier form.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-rescue-modifiers
   Enabled: true
+Style/RedundantAssignment:
+  Description: 'Checks for redundant assignment before returning.'
+  Enabled: true
+  VersionAdded: '0.87'
 Style/RedundantRegexpCharacterClass:
   Description: 'Checks for unnecessary single-element Regexp character classes.'
   Enabled: true
