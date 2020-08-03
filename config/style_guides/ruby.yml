@@ -784,6 +784,13 @@ Lint/FlipFlop:
   Description: Checks for flip flops
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-flip-flops
   Enabled: false
+Style/HashAsLastArrayItem:
+  Description: >-
+                 Checks for presence or absence of braces around hash literal as a last
+                 array item depending on configuration.
+  StyleGuide: '#hash-literal-as-last-array-item'
+  Enabled: true
+  VersionAdded: '0.88'
 Style/HashLikeCase:
   Description: >-
                   Checks for places where `case-when` represents a simple 1:1
