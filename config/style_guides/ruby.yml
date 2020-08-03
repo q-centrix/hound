@@ -626,6 +626,11 @@ Layout/ExtraSpacing:
 Naming/AccessorMethodName:
   Description: Check the naming of accessor methods for get_/set_.
   Enabled: false
+Style/AccessorGrouping:
+  Description: 'Checks for grouping of accessors in `class` and `module` bodies.'
+  Enabled: true
+  VersionAdded: '0.87'
+  EnforcedStyle: grouped
 Style/Alias:
   Description: Use alias_method instead of alias.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#alias-method
