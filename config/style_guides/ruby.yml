@@ -1017,6 +1017,10 @@ Lint/Loop:
     for post-loop tests.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#loop-with-break
   Enabled: false
+Lint/MixedRegexpCaptureTypes:
+  Description: 'Do not mix named captures and numbered captures in a Regexp literal.'
+  Enabled: true
+  VersionAdded: '0.85'
 Lint/ParenthesesAsGroupedExpression:
   Description: Checks for method calls with a space before the opening parenthesis.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#parens-no-spaces
