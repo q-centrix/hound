@@ -928,6 +928,11 @@ Style/SelfAssignment:
     used.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#self-assignment
   Enabled: true
+Style/SlicingWithRange:
+  Description: 'Checks array slicing is done with endless ranges when suitable.'
+  Enabled: true
+  VersionAdded: '0.83'
+  Safe: false
 Layout/SpaceAfterColon:
   Description: Use spaces after colons.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#spaces-operators
