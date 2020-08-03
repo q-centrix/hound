@@ -871,6 +871,12 @@ Layout/SpaceAfterComma:
 Layout/SpaceAroundKeyword:
   Description: Use spaces after if/elsif/unless/while/until/case/when.
   Enabled: true
+
+Layout/SpaceAroundMethodCallOperator:
+  Description: 'Checks method call operators to not have spaces around them.'
+  Enabled: true
+  VersionAdded: '0.82'
+
 Layout/SpaceAfterMethodName:
   Description: Do not put a space between a method name and the opening parenthesis
     in a method definition.
@@ -972,6 +978,10 @@ Lint/Debugger:
 Lint/DeprecatedClassMethods:
   Description: Check for deprecated class method calls.
   Enabled: false
+Lint/DeprecatedOpenSSLConstant:
+  Description: "Don't use algorithm constants for `OpenSSL::Cipher` and `OpenSSL::Digest`."
+  Enabled: true
+  VersionAdded: '0.84'
 Lint/DuplicateMethods:
   Description: Check for duplicate methods calls.
   Enabled: true
