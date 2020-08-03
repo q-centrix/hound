@@ -915,6 +915,13 @@ Style/RedundantAssignment:
   Description: 'Checks for redundant assignment before returning.'
   Enabled: true
   VersionAdded: '0.87'
+Style/RedundantFileExtensionInRequire:
+  Description: >-
+                  Checks for the presence of superfluous `.rb` extension in
+                  the filename provided to `require` and `require_relative`.
+  StyleGuide: '#no-explicit-rb-to-require'
+  Enabled: true
+  VersionAdded: '0.88'
 Style/RedundantRegexpCharacterClass:
   Description: 'Checks for unnecessary single-element Regexp character classes.'
   Enabled: true
