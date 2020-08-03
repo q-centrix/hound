@@ -774,6 +774,12 @@ Style/EvenOdd:
   Description: Favor the use of Fixnum#even? && Fixnum#odd?
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#predicate-methods
   Enabled: true
+Style/ExponentialNotation:
+  Description: 'When using exponential notation, favor a mantissa between 1 (inclusive) and 10 (exclusive).'
+  StyleGuide: '#exponential-notation'
+  Enabled: true
+  VersionAdded: '0.82'
+  EnforcedStyle: scientific
 Lint/FlipFlop:
   Description: Checks for flip flops
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-flip-flops
