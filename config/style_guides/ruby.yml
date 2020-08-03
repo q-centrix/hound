@@ -667,6 +667,12 @@ Style/BeginBlock:
   Description: Avoid the use of BEGIN blocks.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-BEGIN-blocks
   Enabled: true
+Style/BisectedAttrAccessor:
+  Description: >-
+                Checks for places where `attr_reader` and `attr_writer`
+                for the same method can be combined into single `attr_accessor`.
+  Enabled: true
+  VersionAdded: '0.87'
 Style/BlockComments:
   Description: Do not use block comments.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-block-comments
