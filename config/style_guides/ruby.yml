@@ -639,6 +639,14 @@ Layout/ArrayAlignment:
   Description: Align the elements of an array literal if they span more than one line.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#align-multiline-arrays
   Enabled: true
+Style/ArrayCoercion:
+  Description: >-
+                  Use Array() instead of explicit Array check or [*var], when dealing
+                  with a variable you want to treat as an Array, but you're not certain it's an array.
+  StyleGuide: '#array-coercion'
+  Safe: false
+  Enabled: true
+  VersionAdded: '0.88'
 Style/ArrayJoin:
   Description: Use Array#join instead of Array#*.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#array-join
