@@ -644,9 +644,7 @@ Style/ArrayCoercion:
                   Use Array() instead of explicit Array check or [*var], when dealing
                   with a variable you want to treat as an Array, but you're not certain it's an array.
   StyleGuide: '#array-coercion'
-  Safe: false
   Enabled: true
-  VersionAdded: '0.88'
 Style/ArrayJoin:
   Description: Use Array#join instead of Array#*.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#array-join
@@ -791,6 +789,12 @@ Style/HashAsLastArrayItem:
   StyleGuide: '#hash-literal-as-last-array-item'
   Enabled: true
   VersionAdded: '0.88'
+Style/HashEachMethods:
+  Description: 'Use Hash#each_key and Hash#each_value.'
+  StyleGuide: '#hash-each'
+  Enabled: true
+  VersionAdded: '0.80'
+  Safe: false
 Style/HashLikeCase:
   Description: >-
                   Checks for places where `case-when` represents a simple 1:1
