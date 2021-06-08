@@ -1066,7 +1066,6 @@ Performance/AncestorsInclude:
   Description: 'Use `A <= B` instead of `A.ancestors.include?(B)`.'
   Reference: 'https://github.com/JuanitoFatas/fast-ruby#ancestorsinclude-vs--code'
   Enabled: true
-  Safe: false
   VersionAdded: '1.7'
 
 Performance/ArraySemiInfiniteRangeSlice:
@@ -1098,7 +1097,6 @@ Performance/Caller:
              Use `caller(n..n)` instead of `caller`.
   Enabled: true
   VersionAdded: '0.49'
-  VersionChanged: '1.9'
 
 Performance/CaseWhenSplat:
   Description: >-
@@ -1158,18 +1156,14 @@ Performance/Count:
 Performance/DeletePrefix:
   Description: 'Use `delete_prefix` instead of `gsub`.'
   Enabled: true
-  Safe: false
   SafeMultiline: true
   VersionAdded: '1.6'
-  VersionChanged: '1.12'
 
 Performance/DeleteSuffix:
   Description: 'Use `delete_suffix` instead of `gsub`.'
   Enabled: true
-  Safe: false
   SafeMultiline: true
   VersionAdded: '1.6'
-  VersionChanged: '1.12'
 
 Performance/Detect:
   Description: >-
@@ -1292,9 +1286,6 @@ Performance/RedundantMerge:
   Description: 'Use Hash#[]=, rather than Hash#merge! with a single key-value pair.'
   Reference: 'https://github.com/JuanitoFatas/fast-ruby#hashmerge-vs-hash-code'
   Enabled: true
-  Safe: false
-  VersionAdded: '0.36'
-  VersionChanged: '1.11'
   # Max number of key-value pairs to consider an offense
   MaxKeyValuePairs: 2
 
@@ -1372,7 +1363,6 @@ Performance/StringInclude:
   Description: 'Use `String#include?` instead of a regex match with literal-only pattern.'
   Enabled: true
   AutoCorrect: false
-  SafeAutoCorrect: false
   VersionAdded: '1.7'
 
 Performance/StringReplacement:
@@ -1401,9 +1391,7 @@ Performance/TimesMap:
 Performance/UnfreezeString:
   Description: 'Use unary plus to get an unfrozen string literal.'
   Enabled: true
-  SafeAutoCorrect: false
   VersionAdded: '0.50'
-  VersionChanged: '1.9'
 
 Performance/UriDefaultParser:
   Description: 'Use `URI::DEFAULT_PARSER` instead of `URI::Parser.new`.'
