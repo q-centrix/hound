@@ -172,7 +172,7 @@ Naming/MemoizedInstanceVariableName:
 Layout/FirstArgumentIndentation:
   Description: Checks the indentation of the first parameter in a method call.
   Enabled: true
-  EnforcedStyle: special_for_inner_method_call_in_parentheses
+  EnforcedStyle: consistent
   SupportedStyles:
   - consistent
   - special_for_inner_method_call
