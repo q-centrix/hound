@@ -31,6 +31,7 @@ gem "resque-scheduler"
 gem "resque-sentry"
 gem "rest-client", ">= 1.8.0"
 gem "rubocop", ">= 0.41.0"
+gem 'rubocop-performance'
 gem "sass-rails"
 gem "split", require: "split/dashboard"
 gem "stripe"
