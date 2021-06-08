@@ -1068,15 +1068,6 @@ Performance/AncestorsInclude:
   Enabled: true
   VersionAdded: '1.7'
 
-Performance/ArraySemiInfiniteRangeSlice:
-  Description: 'Identifies places where slicing arrays with semi-infinite ranges can be replaced by `Array#take` and `Array#drop`.'
-  # This cop was created due to a mistake in microbenchmark.
-  # Refer https://github.com/rubocop/rubocop-performance/pull/175#issuecomment-731892717
-  Enabled: false
-  # Unsafe for string slices because strings do not have `#take` and `#drop` methods.
-  Safe: false
-  VersionAdded: '1.9'
-
 Performance/BigDecimalWithNumericArgument:
   Description: 'Convert numeric argument to string before passing to BigDecimal.'
   Enabled: true
@@ -1086,11 +1077,6 @@ Performance/BindCall:
   Description: 'Use `bind_call(obj, args, ...)` instead of `bind(obj).call(args, ...)`.'
   Enabled: true
   VersionAdded: '1.6'
-
-Performance/BlockGivenWithExplicitBlock:
-  Description: 'Check block argument explicitly instead of using `block_given?`.'
-  Enabled: pending
-  VersionAdded: '1.9'
 
 Performance/Caller:
   Description: >-
@@ -1124,23 +1110,10 @@ Performance/ChainArrayAllocation:
   Enabled: false
   VersionAdded: '0.59'
 
-Performance/CollectionLiteralInLoop:
-  Description: 'Extract Array and Hash literals outside of loops into local variables or constants.'
-  Enabled: true
-  VersionAdded: '1.8'
-  # Min number of elements to consider an offense
-  MinSize: 1
-
 Performance/CompareWithBlock:
   Description: 'Use `sort_by(&:foo)` instead of `sort { |a, b| a.foo <=> b.foo }`.'
   Enabled: true
   VersionAdded: '0.46'
-
-Performance/ConstantRegexp:
-  Description: 'Finds regular expressions with dynamic components that are all constants.'
-  Enabled: pending
-  VersionAdded: '1.9'
-  VersionChanged: '1.10'
 
 Performance/Count:
   Description: >-
@@ -1151,7 +1124,6 @@ Performance/Count:
   SafeAutoCorrect: false
   Enabled: true
   VersionAdded: '0.31'
-  VersionChanged: '1.8'
 
 Performance/DeletePrefix:
   Description: 'Use `delete_prefix` instead of `gsub`.'
@@ -1234,17 +1206,6 @@ Performance/IoReadlines:
   Enabled: false
   VersionAdded: '1.7'
 
-Performance/MapCompact:
-  Description: 'Use `filter_map` instead of `collection.map(&:do_something).compact`.'
-  Enabled: true
-  VersionAdded: '1.11'
-
-Performance/MethodObjectAsBlock:
-  Description: 'Use block explicitly instead of block-passing a method object.'
-  Reference: 'https://github.com/JuanitoFatas/fast-ruby#normal-way-to-apply-method-vs-method-code'
-  Enabled: pending
-  VersionAdded: '1.9'
-
 Performance/OpenStruct:
   Description: 'Use `Struct` instead of `OpenStruct`.'
   Enabled: false
@@ -1265,15 +1226,6 @@ Performance/RedundantBlockCall:
   Enabled: true
   VersionAdded: '0.36'
 
-Performance/RedundantEqualityComparisonBlock:
-  Description: >-
-                  Checks for uses `Enumerable#all?`, `Enumerable#any?`, `Enumerable#one?`,
-                  or `Enumerable#none?` are compared with `===` or similar methods in block.
-  Reference: 'https://github.com/rails/rails/pull/41363'
-  Enabled: pending
-  Safe: false
-  VersionAdded: '1.10'
-
 Performance/RedundantMatch:
   Description: >-
                   Use `=~` instead of `String#match` or `Regexp#match` in a context where the
@@ -1292,11 +1244,6 @@ Performance/RedundantSortBlock:
   Description: 'Use `sort` instead of `sort { |a, b| a <=> b }`.'
   Enabled: true
   VersionAdded: '1.7'
-
-Performance/RedundantSplitRegexpArgument:
-  Description: 'This cop identifies places where `split` argument can be replaced from a deterministic regexp to a string.'
-  Enabled: pending
-  VersionAdded: '1.10'
 
 Performance/RedundantStringChars:
   Description: 'Checks for redundant `String#chars`.'
@@ -1321,11 +1268,6 @@ Performance/ReverseFirst:
   Description: 'Use `last(n).reverse` instead of `reverse.first(n)`.'
   Enabled: true
   VersionAdded: '1.7'
-
-Performance/SelectMap:
-  Description: 'Use `filter_map` instead of `ary.select(&:foo).map(&:bar)`.'
-  Enabled: false
-  VersionAdded: '1.11'
 
 Performance/Size:
   Description: >-
@@ -1372,12 +1314,6 @@ Performance/StringReplacement:
   Reference: 'https://github.com/JuanitoFatas/fast-ruby#stringgsub-vs-stringtr-code'
   Enabled: true
   VersionAdded: '0.33'
-
-Performance/Sum:
-  Description: 'Use `sum` instead of a custom array summation.'
-  Reference: 'https://blog.bigbinary.com/2016/11/02/ruby-2-4-introduces-enumerable-sum.html'
-  Enabled: true
-  VersionAdded: '1.8'
 
 Performance/TimesMap:
   Description: 'Checks for .times.map calls.'
