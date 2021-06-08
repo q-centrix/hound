@@ -1,5 +1,4 @@
 require: rubocop-rails
-require: rubocop-performance
 
 AllCops:
   TargetRubyVersion: 2.5
