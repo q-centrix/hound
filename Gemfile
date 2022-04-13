@@ -54,7 +54,7 @@ group :development, :test do
 end
 
 group :test do
-  gem "capybara", "~> 2.4.0"
+  gem "capybara" #, "~> 2.4.0"
   # gem "capybara-webkit", "~> 1.5.1"
   gem "database_cleaner"
   gem "factory_girl_rails"

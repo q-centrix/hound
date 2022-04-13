@@ -1,7 +1,9 @@
+inherit_from: .rubocop_todo.yml
+
 require: rubocop-rails
 AllCops:
-  TargetRubyVersion: 2.5
-  TargetRailsVersion: 5.2
+  TargetRubyVersion: 3.0
+  TargetRailsVersion: 6.1
   Include:
   - "**/*.jbuilder"
   - "**/*.rake"
@@ -1039,7 +1041,7 @@ Lint/UselessAssignment:
   Description: Checks for useless assignment to a local variable.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#underscore-unused-vars
   Enabled: true
-Lint/UselessComparison:
+Lint/BinaryOperatorWithIdenticalOperands:
   Description: Checks for comparison of something with itself.
   Enabled: true
 Lint/UselessElseWithoutRescue:
