@@ -169,7 +169,7 @@ Naming/MemoizedInstanceVariableName:
 Layout/FirstArgumentIndentation:
   Description: Checks the indentation of the first parameter in a method call.
   Enabled: true
-  EnforcedStyle: special_for_inner_method_call_in_parentheses
+  EnforcedStyle: consistent
   SupportedStyles:
   - consistent
   - special_for_inner_method_call
@@ -630,6 +630,11 @@ Layout/ExtraSpacing:
 Naming/AccessorMethodName:
   Description: Check the naming of accessor methods for get_/set_.
   Enabled: false
+Style/AccessorGrouping:
+  Description: 'Checks for grouping of accessors in `class` and `module` bodies.'
+  Enabled: true
+  VersionAdded: '0.87'
+  EnforcedStyle: grouped
 Style/Alias:
   Description: Use alias_method instead of alias.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#alias-method
@@ -637,6 +642,12 @@ Style/Alias:
 Layout/ArrayAlignment:
   Description: Align the elements of an array literal if they span more than one line.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#align-multiline-arrays
+  Enabled: true
+Style/ArrayCoercion:
+  Description: >-
+                  Use Array() instead of explicit Array check or [*var], when dealing
+                  with a variable you want to treat as an Array, but you're not certain it's an array.
+  StyleGuide: '#array-coercion'
   Enabled: true
 Style/ArrayJoin:
   Description: Use Array#join instead of Array#*.
@@ -658,6 +669,12 @@ Style/BeginBlock:
   Description: Avoid the use of BEGIN blocks.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-BEGIN-blocks
   Enabled: true
+Style/BisectedAttrAccessor:
+  Description: >-
+                Checks for places where `attr_reader` and `attr_writer`
+                for the same method can be combined into single `attr_accessor`.
+  Enabled: true
+  VersionAdded: '0.87'
 Style/BlockComments:
   Description: Do not use block comments.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-block-comments
@@ -674,6 +691,11 @@ Style/CaseEquality:
   Description: Avoid explicit use of the case equality operator(===).
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-case-equality
   Enabled: false
+Style/CaseLikeIf:
+  Description: 'This cop identifies places where `if-elsif` constructions can be replaced with `case-when`.'
+  StyleGuide: '#case-vs-if-else'
+  Enabled: true
+  VersionAdded: '0.88'
 Style/CharacterLiteral:
   Description: Checks for uses of character literals.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-character-literals
@@ -727,16 +749,24 @@ Layout/EmptyLines:
 Layout/EmptyLinesAroundAccessModifier:
   Description: Keep blank lines around access modifiers.
   Enabled: true
+Layout/EmptyLinesAroundAttributeAccessor:
+  Description: "Keep blank lines around attribute accessors."
+  StyleGuide: '#empty-lines-around-attribute-accessor'
+  Enabled: true
+  VersionAdded: '0.83'
+  VersionChanged: '0.84'
+  AllowAliasSyntax: true
+  AllowedMethods:
+    - alias_method
+    - public
+    - protected
+    - private
 Layout/EmptyLinesAroundMethodBody:
   Description: Keeps track of empty lines around method bodies.
   Enabled: true
 Style/EmptyLiteral:
   Description: Prefer literals to Array.new/Hash.new/String.new.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#literal-array-hash
-  Enabled: true
-Style/EndBlock:
-  Description: Avoid the use of END blocks.
-  StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-END-blocks
   Enabled: true
 Layout/EndOfLine:
   Description: Use Unix-style line endings.
@@ -746,10 +776,48 @@ Style/EvenOdd:
   Description: Favor the use of Fixnum#even? && Fixnum#odd?
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#predicate-methods
   Enabled: true
+Style/ExponentialNotation:
+  Description: 'When using exponential notation, favor a mantissa between 1 (inclusive) and 10 (exclusive).'
+  StyleGuide: '#exponential-notation'
+  Enabled: true
+  VersionAdded: '0.82'
+  EnforcedStyle: scientific
 Lint/FlipFlop:
   Description: Checks for flip flops
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-flip-flops
   Enabled: false
+Style/HashAsLastArrayItem:
+  Description: >-
+                 Checks for presence or absence of braces around hash literal as a last
+                 array item depending on configuration.
+  StyleGuide: '#hash-literal-as-last-array-item'
+  Enabled: true
+  VersionAdded: '0.88'
+Style/HashEachMethods:
+  Description: 'Use Hash#each_key and Hash#each_value.'
+  StyleGuide: '#hash-each'
+  Enabled: true
+  VersionAdded: '0.80'
+  Safe: false
+Style/HashLikeCase:
+  Description: >-
+                  Checks for places where `case-when` represents a simple 1:1
+                  mapping and can be replaced with a hash lookup.
+  Enabled: true
+  VersionAdded: '0.88'
+  # `MinBranchesCount` defines the number of branches `case` needs to have
+  # to trigger this cop
+  MinBranchesCount: 3
+Style/HashTransformKeys:
+  Description: 'Prefer `transform_keys` over `each_with_object` and `map`.'
+  Enabled: true
+  VersionAdded: '0.80'
+  Safe: false
+Style/HashTransformValues:
+  Description: 'Prefer `transform_values` over `each_with_object` and `map`.'
+  Enabled: true
+  VersionAdded: '0.80'
+  Safe: false
 Style/IfWithSemicolon:
   Description: Do not use if x; .... Use the ternary operator instead.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-semicolon-ifs
@@ -851,11 +919,47 @@ Style/RescueModifier:
   Description: Avoid using rescue in its modifier form.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-rescue-modifiers
   Enabled: true
+Style/RedundantAssignment:
+  Description: 'Checks for redundant assignment before returning.'
+  Enabled: true
+  VersionAdded: '0.87'
+Style/RedundantFetchBlock:
+  Description: >-
+                  Use `fetch(key, value)` instead of `fetch(key) { value }`
+                  when value has Numeric, Rational, Complex, Symbol or String type, `false`, `true`, `nil` or is a constant.
+  Reference: 'https://github.com/JuanitoFatas/fast-ruby#hashfetch-with-argument-vs-hashfetch--block-code'
+  Enabled: true
+  Safe: false
+  # If enabled, this cop will autocorrect usages of
+  # `fetch` being called with block returning a constant.
+  # This can be dangerous since constants will not be defined at that moment.
+  SafeForConstants: false
+  VersionAdded: '0.86'
+Style/RedundantFileExtensionInRequire:
+  Description: >-
+                  Checks for the presence of superfluous `.rb` extension in
+                  the filename provided to `require` and `require_relative`.
+  StyleGuide: '#no-explicit-rb-to-require'
+  Enabled: true
+  VersionAdded: '0.88'
+Style/RedundantRegexpCharacterClass:
+  Description: 'Checks for unnecessary single-element Regexp character classes.'
+  Enabled: true
+  VersionAdded: '0.85'
+Style/RedundantRegexpEscape:
+  Description: 'Checks for redundant escapes in Regexps.'
+  Enabled: true
+  VersionAdded: '0.85'
 Style/SelfAssignment:
   Description: Checks for places where self-assignment shorthand should have been
     used.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#self-assignment
   Enabled: true
+Style/SlicingWithRange:
+  Description: 'Checks array slicing is done with endless ranges when suitable.'
+  Enabled: true
+  VersionAdded: '0.83'
+  Safe: false
 Layout/SpaceAfterColon:
   Description: Use spaces after colons.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#spaces-operators
@@ -867,6 +971,12 @@ Layout/SpaceAfterComma:
 Layout/SpaceAroundKeyword:
   Description: Use spaces after if/elsif/unless/while/until/case/when.
   Enabled: true
+
+Layout/SpaceAroundMethodCallOperator:
+  Description: 'Checks method call operators to not have spaces around them.'
+  Enabled: true
+  VersionAdded: '0.82'
+
 Layout/SpaceAfterMethodName:
   Description: Do not put a space between a method name and the opening parenthesis
     in a method definition.
@@ -968,6 +1078,14 @@ Lint/Debugger:
 Lint/DeprecatedClassMethods:
   Description: Check for deprecated class method calls.
   Enabled: false
+Lint/DeprecatedOpenSSLConstant:
+  Description: "Don't use algorithm constants for `OpenSSL::Cipher` and `OpenSSL::Digest`."
+  Enabled: true
+  VersionAdded: '0.84'
+Lint/DuplicateElsifCondition:
+  Description: 'Do not repeat conditions used in if `elsif`.'
+  Enabled: true
+  VersionAdded: '0.88'
 Lint/DuplicateMethods:
   Description: Check for duplicate methods calls.
   Enabled: true
@@ -999,10 +1117,23 @@ Lint/Loop:
     for post-loop tests.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#loop-with-break
   Enabled: false
+Lint/MixedRegexpCaptureTypes:
+  Description: 'Do not mix named captures and numbered captures in a Regexp literal.'
+  Enabled: true
+  VersionAdded: '0.85'
 Lint/ParenthesesAsGroupedExpression:
   Description: Checks for method calls with a space before the opening parenthesis.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#parens-no-spaces
   Enabled: false
+Lint/RaiseException:
+  Description: Checks for `raise` or `fail` statements which are raising `Exception` class.
+  StyleGuide: '#raise-exception'
+  Enabled: true
+  Safe: false
+  VersionAdded: '0.81'
+  VersionChanged: '0.86'
+  AllowedImplicitNamespaces:
+    - 'Gem'
 Lint/RequireParentheses:
   Description: Use parentheses in the method call to avoid confusion about precedence.
   Enabled: false
@@ -1018,6 +1149,10 @@ Lint/RedundantStringCoercion:
   Description: Checks for Object#to_s usage in string interpolation.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-to-s
   Enabled: true
+Lint/StructNewOverride:
+  Description: 'Disallow overriding the `Struct` built-in methods via `Struct.new`.'
+  Enabled: true
+  VersionAdded: '0.81'
 Lint/UnderscorePrefixedVariableName:
   Description: Do not use prefix `_` for a variable that is used.
   Enabled: false
