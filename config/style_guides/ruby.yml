@@ -19,8 +19,8 @@ AllCops:
 Rails:
   Enabled: true
 Rails/HasManyOrHasOneDependent:
-  Description: ENABLE THIS AFTER https://github.com/bbatsov/rubocop/issues/4751 IS RELEASED
-  Enabled: false
+  Description: https://www.rubydoc.info/gems/rubocop/0.51.0/RuboCop/Cop/Rails/HasManyOrHasOneDependent
+  Enabled: true
 Rails/LexicallyScopedActionFilter:
   StyleGuide: http://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Rails/LexicallyScopedActionFilter
   Enabled: false
